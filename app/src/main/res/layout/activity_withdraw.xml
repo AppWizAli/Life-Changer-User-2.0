@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:padding="12dp"
                 android:layout_gravity="center_vertical"
                 android:tint="@color/secondary_m"
                 android:src="@drawable/baseline_arrow_back_ios_24"/>
@@ -89,6 +90,7 @@
                     android:textSize="13dp" />
 
                 <TextView
+                    android:id="@+id/withdrawamount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20,000"
@@ -99,6 +101,7 @@
 
 
             <TextView
+                android:id="@+id/lastwithdrawDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"

@@ -73,7 +73,6 @@ class FragmentApprovedInvest : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == CREATE_PDF_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data?.let { uri ->
                 val outputStream = requireContext().contentResolver.openOutputStream(uri)

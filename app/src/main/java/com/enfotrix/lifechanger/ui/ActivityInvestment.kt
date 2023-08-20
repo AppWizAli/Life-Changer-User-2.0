@@ -71,12 +71,16 @@ class ActivityInvestment : AppCompatActivity() {
 
         getData()
 
+        withdrawdate()
+
         investmentPagerAdapter = InvestmentViewPagerAdapter(this, 2)
         binding.viewPager.adapter = investmentPagerAdapter
         binding.imgBack.setOnClickListener {
             finish()
         }
 
+
+        binding.totalInvestment.text = sharedPrefManager.getInvestment().investmentBalance
     }
 
 
@@ -141,5 +145,17 @@ class ActivityInvestment : AppCompatActivity() {
         }
     }
 
+    fun withdrawdate() {
+        val approvedWithdrawTransactions = sharedPrefManager.getWithdrawReqList()
+            .filter { it.status == constants.TRANSACTION_STATUS_APPROVED }
+        val lastApprovedWithdrawTransaction = approvedWithdrawTransactions
+            .filter { it.transactionAt != null }
+            .maxByOrNull { it.transactionAt!! }
+        lastApprovedWithdrawTransaction?.let {
+            val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+            val formattedDate = it.transactionAt!!.toDate()?.let { dateFormat.format(it) }
+            binding.lastwithdrawDate.text = "$formattedDate to last withdraw"
+        }
+    }
 
 }

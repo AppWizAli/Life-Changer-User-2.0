@@ -24,6 +24,8 @@ import com.enfotrix.lifechanger.Utils
 import com.enfotrix.lifechanger.databinding.ActivityWithdrawBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ActivityWithdraw : AppCompatActivity() {
 
@@ -32,8 +34,7 @@ class ActivityWithdraw : AppCompatActivity() {
     private lateinit var utils: Utils
     private lateinit var mContext: Context
     private lateinit var constants: Constants
-    private lateinit var sharedPrefManager : SharedPrefManager
-
+    private lateinit var sharedPrefManager: SharedPrefManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,15 +43,17 @@ class ActivityWithdraw : AppCompatActivity() {
         binding = ActivityWithdrawBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mContext=this@ActivityWithdraw
+        mContext = this@ActivityWithdraw
         utils = Utils(mContext)
-        constants= Constants()
+        constants = Constants()
         sharedPrefManager = SharedPrefManager(mContext)
         setTitle("My Withdraws")
-
-
-
+        binding.withdrawamount.text = totalApprovedWithdrawAmount().toString()
         getData()
+        withdrawdate()
+        binding.imgBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupTabLayout() {
@@ -58,8 +61,9 @@ class ActivityWithdraw : AppCompatActivity() {
             binding.tabLayout, binding.viewPager
         ) { tab,
             position ->
-            if(position==0) tab.text ="Approved"
-            else if(position==1) tab.text="Pending" }.attach()
+            if (position == 0) tab.text = "Approved"
+            else if (position == 1) tab.text = "Pending"
+        }.attach()
     }
 
     private fun setupViewPager() {
@@ -67,40 +71,44 @@ class ActivityWithdraw : AppCompatActivity() {
         binding.viewPager.adapter = adapter
     }
 
-    private fun getData(){
+    private fun getData() {
         utils.startLoadingAnimation()
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             investmentViewModel.getWithdrawsReq(sharedPrefManager.getToken())
-                .addOnCompleteListener{task ->
+                .addOnCompleteListener { task ->
                     utils.endLoadingAnimation()
                     if (task.isSuccessful) {
 
                         val list = ArrayList<TransactionModel>()
-                        if(task.result.size()>0){
+                        if (task.result.size() > 0) {
 
-                            for (document in task.result) list.add( document.toObject(TransactionModel::class.java))
+                            for (document in task.result) list.add(
+                                document.toObject(
+                                    TransactionModel::class.java
+                                )
+                            )
                             sharedPrefManager.putWithdrawReqList(list)
                             setupViewPager()
                             setupTabLayout()
 
 
-
                         }
-                    }
-                    else Toast.makeText(mContext, constants.SOMETHING_WENT_WRONG_MESSAGE, Toast.LENGTH_SHORT).show()
-
+                    } else Toast.makeText(
+                        mContext,
+                        constants.SOMETHING_WENT_WRONG_MESSAGE,
+                        Toast.LENGTH_SHORT
+                    ).show()
 
 
                 }
-                .addOnFailureListener{
+                .addOnFailureListener {
                     utils.endLoadingAnimation()
-                    Toast.makeText(mContext, it.message+"", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, it.message + "", Toast.LENGTH_SHORT).show()
 
                 }
 
         }
     }
-
 
 
     override fun onBackPressed() {
@@ -114,5 +122,38 @@ class ActivityWithdraw : AppCompatActivity() {
             viewPager.currentItem = viewPager.currentItem - 1
         }
     }
+
+
+    private fun totalApprovedWithdrawAmount(): Double {
+        val approvedWithdrawTransactions = sharedPrefManager.getWithdrawReqList()
+            .filter { it.status == constants.TRANSACTION_STATUS_APPROVED }
+
+        // Calculate the total approved withdraw amount
+        var totalAmount = 0.0 // Initialize the total amount as Double
+
+        for (transaction in approvedWithdrawTransactions) {
+            val amountString = transaction.amount // Get the amount as String
+            val amount = amountString.toDoubleOrNull()
+                ?: 0.0 // Convert to Double or use 0.0 if conversion fails
+            totalAmount += amount
+        }
+
+        return totalAmount
+    }
+
+
+    fun withdrawdate() {
+        val approvedWithdrawTransactions = sharedPrefManager.getWithdrawReqList()
+            .filter { it.status == constants.TRANSACTION_STATUS_APPROVED }
+        val lastApprovedWithdrawTransaction = approvedWithdrawTransactions
+            .filter { it.transactionAt != null }
+            .maxByOrNull { it.transactionAt!! }
+        lastApprovedWithdrawTransaction?.let {
+            val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+            val formattedDate = it.transactionAt!!.toDate()?.let { dateFormat.format(it) }
+            binding.lastwithdrawDate.text = "$formattedDate to last withdraw"
+        }
+    }
+
 
 }
