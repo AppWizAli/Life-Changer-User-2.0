@@ -118,7 +118,7 @@ class NotificationsFragment : Fragment() {
 
     private fun setData() {
         Glide.with(mContext).load(sharedPrefManager.getUser().photo).centerCrop()
-            .placeholder(R.drawable.ic_launcher_background).into(binding.imgUser);
+            .placeholder(R.drawable.ic_launcher_background).into(binding.imgUser)
         binding.tvUserName.text = sharedPrefManager.getUser().firstName
         binding.tvCNIC.text = sharedPrefManager.getUser().cnic
         binding.tvAddress.text = sharedPrefManager.getUser().address

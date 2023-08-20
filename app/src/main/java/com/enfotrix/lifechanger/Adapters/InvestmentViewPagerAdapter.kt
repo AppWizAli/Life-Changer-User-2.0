@@ -21,4 +21,9 @@ class InvestmentViewPagerAdapter (fragmentActivity: FragmentActivity, private va
             else -> FragmentApprovedInvest()
         }
     }
+    fun isApprovedInvestFragmentSelected(currentFragmentIndex: Int): Boolean {
+        return currentFragmentIndex == 0
+    }
+
+
 }

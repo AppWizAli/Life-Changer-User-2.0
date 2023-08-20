@@ -4,6 +4,7 @@ import InvestorNomineeModel
 import User
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -334,12 +336,11 @@ class ActivityUserDetails : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.top_logout -> {
-                Toast.makeText(applicationContext, "click on setting", Toast.LENGTH_LONG).show()
+                showDialog()
                 true
             }
-
             R.id.top_contactUs -> {
-                Toast.makeText(applicationContext, "click on share", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Available soon", Toast.LENGTH_LONG).show()
                 return true
             }
 
@@ -900,6 +901,37 @@ class ActivityUserDetails : AppCompatActivity() {
 
 
     }
+
+
+    fun showDialog(): Boolean {
+        val dialogView = LayoutInflater.from(this@ActivityUserDetails).inflate(R.layout.logout_dialog, null)
+        val buttonYes: Button = dialogView.findViewById(R.id.btn_yes)
+        val buttonNo: Button = dialogView.findViewById(R.id.btn_no)
+
+        val builder = AlertDialog.Builder(this@ActivityUserDetails)
+        builder.setView(dialogView)
+        builder.setCancelable(true)
+        var flag = false
+
+        val alertDialog = builder.create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        buttonYes.setOnClickListener {
+            sharedPrefManager.clearWholeSharedPref()
+            sharedPrefManager.logOut()
+            startActivity(Intent(this@ActivityUserDetails, ActivityLogin::class.java))
+            ActivityUserDetails().finish()
+            alertDialog.dismiss()
+        }
+
+        buttonNo.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+        return false
+    }
+
 }
 
 

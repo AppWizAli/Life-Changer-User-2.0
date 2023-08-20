@@ -395,6 +395,7 @@
             android:layout_below="@+id/v1">
 
             <RelativeLayout
+                android:id="@+id/updatepassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -422,7 +423,6 @@
                     android:tint="@color/primary" />
 
                 <TextView
-                    android:id="@+id/updatepassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="You can change reset transaction/login pin."
