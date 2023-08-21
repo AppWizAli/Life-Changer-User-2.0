@@ -39,7 +39,6 @@ class ActivityNewWithdrawReq : AppCompatActivity(), InvestorAccountsAdapter.OnIt
     private lateinit var sharedPrefManager: SharedPrefManager
     private lateinit var dialog: BottomSheetDialog
     private lateinit var confirmationDialog: Dialog
-
     private lateinit var adapter: InvestorAccountsAdapter
 
     private var accountID: String = ""
@@ -60,14 +59,15 @@ class ActivityNewWithdrawReq : AppCompatActivity(), InvestorAccountsAdapter.OnIt
         confirmationDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         confirmationDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         confirmationDialog.setContentView(R.layout.dialog_check_withdraw_info)
-
         binding.layInvestorAccountSelect.setOnClickListener { getInvestorAccounts() }
         binding.layBalance.setOnClickListener { showAddBalanceDialog() }
         binding.btnWithdraw.setOnClickListener {
             val balance = binding.tvBalance.text.toString()
             var bankTitle=binding.tvAccountTittle.text.toString()
             var accountNumber=binding.tvAccountNumber.text.toString()
-            if (balance.isEmpty() || balance.toDoubleOrNull() == 0.0) {
+            if(sharedPrefManager.getInvestment().investmentBalance< (binding.tvBalance.text.toString()))
+                Toast.makeText(this@ActivityNewWithdrawReq, "Insufficient Balance", Toast.LENGTH_SHORT).show()
+          else  if (balance.isEmpty() || balance.toDoubleOrNull() == 0.0) {
                 Toast.makeText(mContext, "Please enter a valid balance", Toast.LENGTH_SHORT).show()
             }
             else if(bankTitle.isEmpty()||bankTitle.equals("Account Tittle")){

@@ -127,14 +127,12 @@ class ActivityWithdraw : AppCompatActivity() {
     private fun totalApprovedWithdrawAmount(): Double {
         val approvedWithdrawTransactions = sharedPrefManager.getWithdrawReqList()
             .filter { it.status == constants.TRANSACTION_STATUS_APPROVED }
-
-        // Calculate the total approved withdraw amount
-        var totalAmount = 0.0 // Initialize the total amount as Double
+        var totalAmount = 0.0
 
         for (transaction in approvedWithdrawTransactions) {
-            val amountString = transaction.amount // Get the amount as String
+            val amountString = transaction.amount
             val amount = amountString.toDoubleOrNull()
-                ?: 0.0 // Convert to Double or use 0.0 if conversion fails
+                ?: 0.0
             totalAmount += amount
         }
 
@@ -150,7 +148,7 @@ class ActivityWithdraw : AppCompatActivity() {
             .maxByOrNull { it.transactionAt!! }
         lastApprovedWithdrawTransaction?.let {
             val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
-            val formattedDate = it.transactionAt!!.toDate()?.let { dateFormat.format(it) }
+            val formattedDate = it.transactionAt!!.toDate().let { dateFormat.format(it) }
             binding.lastwithdrawDate.text = "$formattedDate to last withdraw"
         }
     }
