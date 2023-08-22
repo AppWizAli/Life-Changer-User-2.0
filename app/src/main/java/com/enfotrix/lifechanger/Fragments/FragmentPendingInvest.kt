@@ -86,7 +86,8 @@ class FragmentPendingInvest : Fragment() {
                     val success =
                         SavePdf(sharedPrefManager, constants).generateInvestmentPDF(
                             outputStream,
-                            "Pending"
+                            "Pending",
+                            "Invest"
                         )
                     outputStream.close()
                     if (success) {

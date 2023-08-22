@@ -1,6 +1,7 @@
 package com.enfotrix.lifechanger.ui
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -45,6 +46,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class ActivityInvestment : AppCompatActivity() {
@@ -79,7 +81,12 @@ class ActivityInvestment : AppCompatActivity() {
             finish()
         }
 
-
+binding.DateFrom.setOnClickListener {
+    showDatePickerDialog("From")
+}
+        binding.DateTo.setOnClickListener {
+            showDatePickerDialog("To")
+        }
         binding.totalInvestment.text = sharedPrefManager.getInvestment().investmentBalance
     }
 
@@ -157,5 +164,34 @@ class ActivityInvestment : AppCompatActivity() {
             binding.lastwithdrawDate.text = "$formattedDate to last withdraw"
         }
     }
+    private fun showDatePickerDialog(check:String) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+        // Create a DatePickerDialog
+        val datePickerDialog = DatePickerDialog(
+            mContext,
+            { view, year, monthOfYear, dayOfMonth ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(Calendar.YEAR, year)
+                selectedDate.set(Calendar.MONTH, monthOfYear)
+                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                val dateFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate.time)
+                if(check=="From")
+      binding.DateFrom.text=formattedDate
+else if(check=="To")
+    binding.DateTo.text=formattedDate
+            },
+            year,
+            month,
+            day
+        )
+
+        // Show the DatePickerDialog
+        datePickerDialog.show()
+    }
 }

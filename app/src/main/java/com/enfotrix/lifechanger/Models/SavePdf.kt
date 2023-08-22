@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class SavePdf(private val sharedPrefManager: SharedPrefManager, private val constants: Constants) {
-    fun generateInvestmentPDF(outputStream: OutputStream,check:String):Boolean {
+    fun generateInvestmentPDF(outputStream: OutputStream, check: String,type: String): Boolean {
         val document = Document()
 
         try {
@@ -23,21 +23,26 @@ class SavePdf(private val sharedPrefManager: SharedPrefManager, private val cons
             document.open()
             val titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18f, BaseColor.BLACK)
             var title: Paragraph
-            var investmentList:List<TransactionModel>
-            if(check=="Approved")
-            {
+            var investmentList: List<TransactionModel>
+            if (check == "Approved" && type=="Invest") {
                 title = Paragraph("Investment Approved Details", titleFont)
-            investmentList = sharedPrefManager.getInvestmentReqList().filter {
+                investmentList = sharedPrefManager.getInvestmentReqList().filter {
                     it.status.equals(constants.TRANSACTION_STATUS_APPROVED)
-                }
-            }
-           else
-            {
-                 title = Paragraph("Investment Pending Details", titleFont)
+                }.sortedByDescending { it.createdAt }
+            } else if(check=="Pending" && type=="Invest"){
+                title = Paragraph("Investment Pending Details", titleFont)
                 investmentList = sharedPrefManager.getInvestmentReqList().filter {
                     it.status.equals(constants.TRANSACTION_STATUS_PENDING)
-                }
+                }.sortedByDescending { it.createdAt }
+            }else if(check=="Approved" && type=="Withdraw"){
+                title = Paragraph("Withdraw Approved Details", titleFont)
+                investmentList =sharedPrefManager.getWithdrawReqList().filter{ it.status.equals(constants.TRANSACTION_STATUS_APPROVED) }.sortedByDescending { it.createdAt }
+            }else{
+                title = Paragraph("Withdraw Pending Details", titleFont)
+                investmentList = sharedPrefManager.getWithdrawReqList().filter{ it.status.equals(constants.TRANSACTION_STATUS_PENDING)
+                }.sortedByDescending { it.createdAt }
             }
+
             title.alignment = Element.ALIGN_CENTER
             document.add(title)
             document.add(Paragraph("\n"))
@@ -73,7 +78,7 @@ class SavePdf(private val sharedPrefManager: SharedPrefManager, private val cons
             return true
         } catch (e: Exception) {
             e.printStackTrace()
-          return false
+            return false
         }
     }
 

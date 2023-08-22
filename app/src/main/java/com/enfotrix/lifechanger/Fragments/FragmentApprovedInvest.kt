@@ -58,6 +58,11 @@ class FragmentApprovedInvest : Fragment() {
         binding.rvWithdrawPending.layoutManager = LinearLayoutManager(mContext)
         binding.rvWithdrawPending.adapter =
             investmentViewModel.getApprovedInvestmentReqAdapter(constants.FROM_APPROVED_INVESTMENT_REQ)
+
+
+        binding.rvWithdrawPending.setOnClickListener {
+            generatePDF()
+        }
         return root
 
     }
@@ -80,7 +85,8 @@ class FragmentApprovedInvest : Fragment() {
                     val success =
                         SavePdf(sharedPrefManager, constants).generateInvestmentPDF(
                             outputStream,
-                            "Approved"
+                            "Approved",
+                            "Invest"
                         )
                     outputStream.close()
 
