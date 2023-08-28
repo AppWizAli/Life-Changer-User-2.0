@@ -56,6 +56,8 @@ class TransactionsAdapter (var activity:String, val data: List<TransactionModel>
                     itemBinding.tvNewBalance.setTextColor(0xFF2F9B47.toInt())
                     itemBinding.tvReqAmount.setTextColor(if (activity == constant.FROM_TAX) Color.RED else 0xFF2F9B47.toInt())
                 }
+
+
                 constant.FROM_PENDING_INVESTMENT_REQ -> {
                     itemBinding.tvApprovedDate.text = constant.TRANSACTION_STATUS_PENDING
                     itemBinding.tvNewBalance.text = constant.TRANSACTION_STATUS_PENDING

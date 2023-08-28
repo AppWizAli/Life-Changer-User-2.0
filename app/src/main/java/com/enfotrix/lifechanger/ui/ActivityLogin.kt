@@ -69,7 +69,8 @@ class ActivityLogin : AppCompatActivity() {
         binding.btnSignIn.setOnClickListener(View.OnClickListener {
 
 
-            if((!IsEmpty()) && IsValid()) checkCNIC(utils.cnicFormate(   binding.etCNIC.editText?.text.toString()))
+            if((!IsEmpty()) && IsValid())
+                checkCNIC(utils.cnicFormate(   binding.etCNIC.editText?.text.toString()))
 
 
         })
