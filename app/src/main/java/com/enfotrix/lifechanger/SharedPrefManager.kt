@@ -18,13 +18,8 @@ import java.lang.reflect.Type
 
 
 class SharedPrefManager(context: Context) {
-
-
     private val sharedPref: SharedPreferences = context.getSharedPreferences("myAppPrefs", Context.MODE_PRIVATE)
-
     private val editor: SharedPreferences.Editor = sharedPref.edit()
-
-
 
     fun saveUser(user: User) {
 

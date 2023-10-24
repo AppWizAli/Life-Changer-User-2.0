@@ -54,7 +54,10 @@ class ActivityTax : AppCompatActivity() {
         setTitle("Tax")
 
         getData()
-
+binding.imgBack.setOnClickListener()
+{
+    finish()
+}
 
     }
 

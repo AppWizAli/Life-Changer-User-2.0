@@ -2,6 +2,7 @@ package com.enfotrix.lifechanger.Fragments
 
 import User
 import android.app.Dialog
+import com.bumptech.glide.Glide
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -119,9 +120,7 @@ class HomeFragment : Fragment() {
 
         return root
     }
-
     private fun checkData() {
-
         db.collection(constants.INVESTOR_COLLECTION).document(sharedPrefManager.getToken())
             .addSnapshotListener { snapshot, firebaseFirestoreException ->
                 firebaseFirestoreException?.let {
@@ -183,6 +182,8 @@ class HomeFragment : Fragment() {
 
     private fun setData() {
         binding.tvUserName.text= sharedPrefManager.getUser().firstName
+        Glide.with(mContext).load(sharedPrefManager.getUser().photo).centerCrop().placeholder(R.drawable.
+        ic_launcher_background).into(binding.profile);
          binding.tvBalance.text= sharedPrefManager.getInvestment().investmentBalance
     }
 

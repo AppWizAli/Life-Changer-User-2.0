@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/SecondaryVariant</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
 
         <item name="android:colorBackground">#EDF8F5</item>
         <item name="android:fontFamily">@font/inter</item>
@@ -26,4 +26,12 @@
     </style>
     <style name="Theme.LifeChanger.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.LifeChanger.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="BottomNavigationStyle">
+        <item name="android:itemTextAppearance">@style/BottomNavigationTextAppearance</item>
+    </style>
+
+    <style name="BottomNavigationTextAppearance">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

@@ -5,8 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/splashscreen"
     tools:context=".ui.ActivitySplash">
+<!--
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -51,6 +52,7 @@
         android:text="www.lifechangerpk.com"
         android:textColor="@color/statusbarcolor"
         android:textStyle="bold" />
+-->
 
 
 </RelativeLayout>

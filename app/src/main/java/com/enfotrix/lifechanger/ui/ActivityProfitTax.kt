@@ -58,7 +58,10 @@ class ActivityProfitTax : AppCompatActivity() {
 
         getData()
 
-
+        binding.imgBack.setOnClickListener()
+        {
+            finish()
+        }
 
 
     }

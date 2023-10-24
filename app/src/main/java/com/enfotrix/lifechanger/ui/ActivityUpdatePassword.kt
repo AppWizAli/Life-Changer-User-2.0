@@ -77,7 +77,6 @@ class ActivityUpdatePassword : AppCompatActivity() {
         dialogUpdateTaken.show()
     }
 
-
     private fun storeInFireStore(completePin: String) {
         var user1 = sharedPrefManager.getUser()
         user1.pin = completePin
@@ -86,7 +85,7 @@ class ActivityUpdatePassword : AppCompatActivity() {
                 if (it.isSuccessful){
                     sharedPrefManager.saveUser(user1)
                     dialogUpdateTaken.dismiss()
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this@ActivityUpdatePassword, MainActivity::class.java))
 
                    }
             }

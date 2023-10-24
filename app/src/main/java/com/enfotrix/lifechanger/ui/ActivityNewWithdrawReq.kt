@@ -149,7 +149,6 @@ class ActivityNewWithdrawReq : AppCompatActivity(), InvestorAccountsAdapter.OnIt
         val tvAmount = confirmationDialog.findViewById<TextView>(R.id.tvamount)
         val btnCancel = confirmationDialog.findViewById<Button>(R.id.btnCancel)
         val btnSave = confirmationDialog.findViewById<Button>(R.id.btnsave)
-
         tvSenderAccountName?.text = binding.tvBankName.text.toString()
         tvSenderAccountNumber?.text = binding.tvAccountNumber.text.toString()
         tvPhone?.text = binding.tvPhone.text.toString()

@@ -6,13 +6,100 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.ActivityTax">
-
-
-    <View
-        android:id="@+id/v2"
+    <RelativeLayout
+        android:id="@+id/v1"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:background="@color/primary"/>
+        android:layout_height="160dp"
+        android:background="@color/primary"
+        android:elevation="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/secondary_m"
+                android:src="@drawable/baseline_arrow_back_ios_24"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tax Details!"
+                android:layout_marginLeft="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/secondary_m"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:alpha="0.2"
+            android:src="@drawable/logo"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="top"
+                    android:paddingTop="5dp"
+                    android:text="Rs."
+                    android:textColor="@color/secondary"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/withdrawamount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/secondary_m"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/lastwithdrawDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text=""
+                android:layout_marginTop="5dp"
+                android:textColor="@color/secondary_m"
+                android:textSize="9sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
